@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Rainbow Kahoot
 // @namespace    https://flawcra.cc/
-// @version      1.0.1-GitHub
+// @version      1.0.2-GitHub
 // @description  Makes the background go rainbow :O
 // @author       FlawCra
 // @match        https://kahoot.it/*
