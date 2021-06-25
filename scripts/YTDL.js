@@ -3,7 +3,7 @@
 // @namespace   https://flawcra.cc/
 // @match       https://www.youtube.com/watch
 // @grant       none
-// @version     1.0.0-GitHub
+// @version     1.0.1-GitHub
 // @author      FlawCra, Loader.to
 // @description Download youtube videos in many formats.
 // ==/UserScript==
