@@ -6,7 +6,7 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       unsafeWindow
-// @version     1.0
+// @version     1.0.1-GitHub
 // @author      FlawCra
 // @description Never gonna rickroll you, never gonna let you get rickrolled.
 // @run-at      document-start
