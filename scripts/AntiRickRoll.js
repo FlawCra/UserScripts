@@ -6,7 +6,7 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       unsafeWindow
-// @version     1.0.1-GitHub
+// @version     1.0.2-GitHub
 // @author      FlawCra
 // @description Never gonna rickroll you, never gonna let you get rickrolled.
 // @run-at      document-start
@@ -29,7 +29,7 @@
         headers: h,
         Vary: 'Origin',
     };
-    fetch("https://cors.flawcra.cc/"+btoa("https://antirickroll.flawcra.cc/list"), ro).then(r => r.json()).then(rickrolls => {
+    fetch("https://cors.flawcra.cc/"+btoa("https://antirickroll.flawcra.cc/list/"), ro).then(r => r.json()).then(rickrolls => {
         for(var rr of rickrolls) {
           if(!blocked_ids.includes(rr))
             blocked_ids.push(rr);
