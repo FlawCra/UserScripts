@@ -6,15 +6,18 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       unsafeWindow
-// @version     1.0.2-GitHub
+// @version     1.0.3-GitHub
 // @author      FlawCra
 // @description Never gonna rickroll you, never gonna let you get rickrolled.
 // @run-at      document-start
 // ==/UserScript==
 
 (() => {
-    unsafeWindow.GM_getValue = GM_getValue;
-    unsafeWindow.GM_setValue = GM_setValue;
+    let re = new RegExp('(.*)antirickroll.flawcra.cc/(.*)');
+    if(re.test(location.href)) {
+      unsafeWindow.GM_getValue = GM_getValue;
+      unsafeWindow.GM_setValue = GM_setValue;
+    }
   
     let blocked_ids = [
         "dQw4w9WgXcQ",
