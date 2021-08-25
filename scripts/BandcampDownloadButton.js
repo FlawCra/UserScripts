@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bandcamp Download Button
 // @namespace    https://flawcra.cc
-// @version      1.0.5-GitHub
+// @version      1.0.6-GitHub
 // @description  A simple download button for Bandcamp and Bandcamp based sites
 // @author       FlawCra
 // @match        *://*/*
@@ -27,7 +27,7 @@
                 action.setAttribute("title", "Download this track");
                 action.addEventListener("click", () => {
                     if(document.getElementsByTagName("audio")[0].src) {
-                        fetch("https://cors.flawcra.cc/"+btoa(document.getElementsByTagName("audio")[0].src)).then(function(t) {
+                        fetch("https://cors.flawcra.cc/?"+document.getElementsByTagName("audio")[0].src).then(function(t) {
                             return t.blob().then((b)=>{
                                 var a = document.createElement("a");
                                 a.href = URL.createObjectURL(b);
