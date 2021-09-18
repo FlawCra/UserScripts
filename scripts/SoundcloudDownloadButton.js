@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Soundcloud Download Button
 // @namespace    https://flawcra.cc/
-// @version      1.0.4-GitHub
+// @version      1.0.5-GitHub
 // @description  A Script that adds a Download button to SoundCloud
 // @author       FlawCra
 // @match        https://soundcloud.com/*/*
@@ -10,6 +10,14 @@
 
 (function() {
     'use strict';
+  function downdone() {
+    clearInterval(window["downloop"]);
+    window["loopbtn"].innerText = "Download complete!";
+    setTimeout(() => {
+      window["loopbtn"].innerText = "Download";
+    }, 5000);
+  }
+  
 setTimeout(() => {
 
     let re1 = new RegExp('(.*)soundcloud.com/(.*)/(.*)');
@@ -28,11 +36,37 @@ var btnElem = document.createElement("button");
         btnElem.setAttribute("aria-label","Download");
         btnElem.innerText = "Download";
     }
-    btnElem.onclick = (data) => {
+    btnElem.onclick = (event) => {
+      window["loopcount"] = 1
+      var path = event.path || (event.composedPath && event.composedPath());
+      window["loopbtn"] = path[0];
+      window["downloop"] = setInterval(() => {
+        switch(window["loopcount"]) {
+          case 1:
+            window["loopbtn"].innerText = "Downloading .";
+            window["loopcount"] = 2;
+            break;
+            
+          case 2:
+            window["loopbtn"].innerText = "Downloading ..";
+            window["loopcount"] = 3;
+            break;
+            
+          case 3:
+            window["loopbtn"].innerText = "Downloading ...";
+            window["loopcount"] = 4;
+            break;
+            
+          case 4:
+            window["loopcount"] = 1;
+            break;
+        }
+      }, 333); 
         if(re2.test(location.href)) {
 			var tmp = re2.exec(location.href);
-            var url = "https://scr.flawcra.cc/"+tmp[2]+"/sets/"+tmp[3];
+            var url = "https://cors.flawcra.cc/?https://scr.flawcra.cc/"+tmp[2]+"/sets/"+tmp[3];
 			fetch(url).then(function(t) {
+                downdone();
                 return t.blob().then((b)=>{
                     var a = document.createElement("a");
                     a.href = URL.createObjectURL(b);
@@ -42,8 +76,9 @@ var btnElem = document.createElement("button");
             	});
 		} else if(re1.test(location.href)) {
             var tmp = re1.exec(location.href);
-            var url = "https://scr.flawcra.cc/"+tmp[2]+"/"+tmp[3];
+            var url = "https://cors.flawcra.cc/?https://scr.flawcra.cc/"+tmp[2]+"/"+tmp[3];
 			fetch(url).then(function(t) {
+                downdone();
                 return t.blob().then((b)=>{
                     var a = document.createElement("a");
                     a.href = URL.createObjectURL(b);
