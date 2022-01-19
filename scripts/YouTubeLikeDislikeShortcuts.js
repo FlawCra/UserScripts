@@ -3,7 +3,7 @@
 // @namespace   FlawCra.CC
 // @match       https://www.youtube.com/watch
 // @grant       none
-// @version     1.0.0-GitHub
+// @version     1.0.1-GitHub
 // @author      FlawCra
 // @run-at      document-end
 // @license     Apache License 2.0
@@ -13,6 +13,7 @@
 document.addEventListener("keydown", function(event) {
 	var target = event.target;
 	if(target.getAttribute("id") == "contenteditable-root") return;
+  	if(target.getAttribute("id") == "search") return;
 
 	switch(event.keyCode) {
 		case 68:
