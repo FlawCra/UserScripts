@@ -3,7 +3,7 @@
 // @namespace   FlawCra.CC
 // @match       https://www.youtube.com/watch
 // @grant       none
-// @version     1.0.0
+// @version     1.0.0-GitHub
 // @author      FlawCra
 // @run-at      document-end
 // @license     Apache License 2.0
