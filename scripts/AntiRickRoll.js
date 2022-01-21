@@ -6,8 +6,9 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       unsafeWindow
-// @version     1.0.4-GitHub
+// @version     1.0.5-GitHub
 // @author      FlawCra
+// @license     Apache License 2.0
 // @description Never gonna rickroll you, never gonna let you get rickrolled.
 // @run-at      document-start
 // ==/UserScript==
