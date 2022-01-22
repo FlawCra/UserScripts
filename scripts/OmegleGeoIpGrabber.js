@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         Omegle Geo IP Grabber
 // @namespace    https://flawcra.cc
-// @version      1.0.5-GitHub
+// @version      1.0.6-GitHub
 // @description  A simple script to troll people on Omegle.
 // @author       FlawCra
+// @license      Apache License 2.0
 // @match        https://www.omegle.com/
 // @grant        none
 // ==/UserScript==
