@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         Discord Verify Exploit
 // @namespace    http://flawcra.cc/
-// @version      2.0.3-GitHub
+// @version      2.0.4-GitHub
 // @description  Workaround for the Discord Verification
 // @author       FlawCra
+// @license      Apache License 2.0
 // @match        https://discordapp.com/library/*
 // @match        https://discordapp.com/store/*
 // @match        https://discordapp.com/channels/*
