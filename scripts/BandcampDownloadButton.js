@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         Bandcamp Download Button
 // @namespace    https://flawcra.cc
-// @version      1.0.6-GitHub
+// @version      1.0.7-GitHub
 // @description  A simple download button for Bandcamp and Bandcamp based sites
 // @author       FlawCra
+// @license     Apache License 2.0
 // @match        *://*/*
 // @grant        all
 // ==/UserScript==
