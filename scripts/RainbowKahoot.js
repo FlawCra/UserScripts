@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         Rainbow Kahoot
 // @namespace    https://flawcra.cc/
-// @version      1.0.2-GitHub
+// @version      1.0.3-GitHub
 // @description  Makes the background go rainbow :O
 // @author       FlawCra
+// @license      Apache License 2.0
 // @match        https://kahoot.it/*
 // @icon         https://www.google.com/s2/favicons?domain=kahoot.it
 // @grant        none
