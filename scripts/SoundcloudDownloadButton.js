@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         Soundcloud Download Button
 // @namespace    https://flawcra.cc/
-// @version      1.0.5-GitHub
+// @version      1.0.6-GitHub
 // @description  A Script that adds a Download button to SoundCloud
 // @author       FlawCra
+// @license      Apache License 2.0
 // @match        https://soundcloud.com/*/*
 // @grant        none
 // ==/UserScript==
