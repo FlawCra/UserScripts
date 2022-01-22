@@ -3,8 +3,9 @@
 // @namespace   https://flawcra.cc/
 // @match       https://crimemarket.to/*
 // @grant       none
-// @version     1.0.0-GitHub
+// @version     1.0.1-GitHub
 // @author      FlawCra
+// @license     Apache License 2.0
 // @description A simple script to secure your messages.
 // ==/UserScript==
 
