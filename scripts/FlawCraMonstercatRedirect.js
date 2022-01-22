@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         FlawCra Monstercat Redirect
 // @namespace    https://flawcra.cc
-// @version      1.0.3-GitHub
+// @version      1.0.4-GitHub
 // @description  Redirects you to the FlawCra Monstercat API
 // @author       FlawCra
+// @license      Apache License 2.0
 // @match        https://monstercat.com/*
 // @match        https://www.monstercat.com/*
 // @grant        unsafeWindow
