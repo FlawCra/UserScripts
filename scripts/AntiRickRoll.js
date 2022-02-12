@@ -2,11 +2,12 @@
 // @name        AntiRickRoll
 // @namespace   https://flawcra.cc/
 // @match       https://*.youtube.com/*
+// @match       https://youtube.com/*
 // @match       https://antirickroll.flawcra.cc/*
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       unsafeWindow
-// @version     1.0.5-GitHub
+// @version     1.0.6-GitHub
 // @author      FlawCra
 // @license     Apache License 2.0
 // @description Never gonna rickroll you, never gonna let you get rickrolled.
@@ -33,7 +34,7 @@
         headers: h,
         Vary: 'Origin',
     };
-    fetch("https://cors.flawcra.cc/?"+"https://antirickroll.flawcra.cc/list/", ro).then(r => r.json()).then(rickrolls => {
+    fetch("https://antirickroll.flawcra.cc/list/", ro).then(r => r.json()).then(rickrolls => {
         for(var rr of rickrolls) {
           if(!blocked_ids.includes(rr))
             blocked_ids.push(rr);
@@ -41,7 +42,7 @@
         if(blocked_ids.find(i => location.href.includes(i)) && !location.href.includes("https://antirickroll.flawcra.cc/?")) {
               console.log(GM_getValue("bypassed"))
               if(!GM_getValue("bypassed")) {
-                  location = "https://antirickroll.flawcra.cc/?"+location.href;
+                location = "https://antirickroll.flawcra.cc/?"+location.href;
               }
         GM_setValue("bypassed", false)
       }
