@@ -3,7 +3,7 @@
 // @namespace   https://flawcra.cc/
 // @match       https://crimemarket.to/*
 // @grant       none
-// @version     1.0.1-GitHub
+// @version     1.0.2-GitHub
 // @author      FlawCra
 // @license     Apache License 2.0
 // @description A simple script to secure your messages.
@@ -27,10 +27,10 @@
             var req = this;
             if (this._method.toLowerCase() === 'post' && window["location"]["hostname"] === 'crimemarket.to') {
                 if(!document.getElementsByClassName("cke_wysiwyg_div")[0].innerHTML.includes("https://revealit.me/")) {
-                    var htmlMessage = fc_getParameterByName("messenger_comment_136235", "http://example.com/?"+arguments[0]);
+                    var htmlMessage = fc_getParameterByName("messenger_comment_271114", "http://example.com/?"+arguments[0]);
                     if(htmlMessage) {
                         if(!checkIfStringIsWhitespace(htmlMessage.replace("<p>","").replace("</p>","").trim())) {
-                            var req = await fetch("https://cors.flawcra.cc/"+btoa("https://revealit.me/register"), {
+                            var req = await fetch("https://cors.flawcra.cc/?"+"https://revealit.me/register", {
                               "headers": {
                                 "accept": "*/*",
                                 "accept-language": "en-US,en;q=0.9",
