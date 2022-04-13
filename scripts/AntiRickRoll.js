@@ -3,11 +3,13 @@
 // @namespace   https://flawcra.cc/
 // @match       https://*.youtube.com/*
 // @match       https://youtube.com/*
+// @match       https://*.youtube-nocookie.com/*
+// @match       https://youtube-nocookie.com/*
 // @match       https://antirickroll.flawcra.cc/*
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       unsafeWindow
-// @version     1.0.7-GitHub
+// @version     1.0.8-GitHub
 // @author      FlawCra
 // @license     Apache License 2.0
 // @description Never gonna rickroll you, never gonna let you get rickrolled.
