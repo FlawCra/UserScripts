@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Kahoot! QOL
 // @namespace    https://flawcra.cc/
-// @version      1.0.1-GitHub
+// @version      1.0.2-GitHub
 // @description  Improves the Quality of Life on Kahoot!
 // @author       FlawCra
 // @license      Apache License 2.0
@@ -34,30 +34,53 @@
           animation: rainbow 18s ease infinite !important;
         }
 
-        @-webkit-keyframes rainbow {
-            0%{background-position:0% 82%}
-            50%{background-position:100% 19%}
-            100%{background-position:0% 82%}
-        }
-        @-moz-keyframes rainbow {
-            0%{background-position:0% 82%}
-            50%{background-position:100% 19%}
-            100%{background-position:0% 82%}
-        }
-        @-o-keyframes rainbow {
-            0%{background-position:0% 82%}
-            50%{background-position:100% 19%}
-            100%{background-position:0% 82%}
-        }
         @keyframes rainbow {
             0%{background-position:0% 82%}
             50%{background-position:100% 19%}
             100%{background-position:0% 82%}
         }
+        
+        
+        
+        .cube_animation {
+          animation: 8s ease-in-out 0s infinite alternate none running cube_animation !important;
+        }
+        
+        @keyframes cube_animation {
+            0% {
+              transform: translate3d(-5vw, 2vh, 0px) rotate(45deg);
+            }
+            50% {
+              transform: translate3d(0px, 0px, 0px) rotate(45deg);
+            }
+            100% {
+              transform: translate3d(-5vw, -2vh, 0px) rotate(45deg);
+            }
+        }
+        
+        
+        
+        .circle_animation {
+          animation: 6s ease-in-out 0s infinite alternate none running circle_animation !important;
+        }
+        
+        @keyframes circle_animation {
+            0% {
+              transform: translate3d(0px, 0px, 0px);
+            }
+            50% {
+              transform: translate3d(-5vw, -2vh, 0px);
+            }
+            100% {
+              transform: translate3d(0px, 0px, 0px);
+            }
+        }
         `;
         document.body.appendChild(rainbow);
         document.querySelector(`#root > div:nth-of-type(1) > div:nth-of-type(1)`).classList.add("rainbow_bg")
         document.querySelector(`#root > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)`).classList.add("rainbow_bg");
+        document.querySelector(`#root > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)`).classList.add("cube_animation");
+        document.querySelector(`#root > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)`).classList.add("circle_animation");
     }, 0);
   
     setInterval(() => {
@@ -65,7 +88,7 @@
       if(document.querySelector(`[data-functional-selector='game-pin-input']`)) document.querySelector(`[data-functional-selector='game-pin-input']`).focus();
     }, 250);
   
-    document.addEventListener("keyup", (ev) => {
+    document.addEventListener("keydown", (ev) => {
       var el = document.querySelector(`[data-functional-selector='answer-${ev.keyCode-49}']`);
       if(el) el.click();
     });
