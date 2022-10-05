@@ -3,12 +3,14 @@
 // @namespace   FlawCra.CC
 // @match       https://www.youtube.com/watch
 // @match       https://www.youtube.com/shorts/*
+// @match       https://www.youtube.com/watch/*
 // @grant       none
-// @version     1.0.2-GitHub
+// @version     1.0.3-GitHub
 // @author      FlawCra
 // @run-at      document-end
 // @license     Apache License 2.0
-// @description Adds more shortcuts to the YouTube webapp. For example Likes and Dislikes.
+// @icon        https://www.google.com/s2/favicons?domain=youtube.com
+// @description Adds more shortcuts to the YouTube webapp like. For example Likes and Dislikes.
 // ==/UserScript==
 
 console.debug(1);
