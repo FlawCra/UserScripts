@@ -3,15 +3,14 @@
 // @namespace   https://flawcra.cc/
 // @match       https://asset.party/*
 // @grant       GM_getValue
-// @version     1.0.2-GitHub
+// @version     1.0.3-GitHub
 // @author      FlawCra
-// @icon        https://www.google.com/s2/favicons?domain=asset.party
+// @icon        https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://asset.party&size=256
 // @license     Apache License 2.0
 // @description A simple script to view how unlikely you are to get an s&box key.
 // ==/UserScript==
 let oldChance = 0;
-const hitmarker = GM_getValue("hitmarker");
-if(!hitmarker) hitmarker = false;
+const hitmarker = false;
 setInterval(() => {
   if(location.href.includes("/get/developer/preview")) {
 
