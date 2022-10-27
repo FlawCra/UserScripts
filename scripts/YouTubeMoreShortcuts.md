@@ -1,6 +1,7 @@
 Note
 -
-⚠️ **Currently broken due to youtube button redesign** ⚠️
+⚠️ **Might not work due to youtube button redesign** ⚠️
+Please open an issue if it's not working for you!
 
 Usage
 -
