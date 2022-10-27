@@ -1,3 +1,7 @@
+Note
+-
+⚠️ **Currently broken due to youtube button redesign** ⚠️
+
 Usage
 -
 * Like a Video/Short using the <kbd>U</kbd> key.
