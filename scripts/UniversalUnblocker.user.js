@@ -3,10 +3,11 @@
 // @namespace   https://flawcra.cc/
 // @match       *://*/*
 // @grant       none
-// @version     1.0.0-GitHub
+// @version     1.0.1-GitHub
 // @author      FlawCra
 // @license     Apache License 2.0
 // @update-url  https://raw.githubusercontent.com/FlawCra/UserScripts/main/scripts/UniversalUnblocker.user.js
+// @icon        https://img.flawcra.cc/1abd1cc5-90d5-4995-d0e3-edf8de86d700
 // @description A script to unblock AntiAdblock or paywalls.
 // ==/UserScript==
 
