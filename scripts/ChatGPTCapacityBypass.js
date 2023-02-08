@@ -5,6 +5,7 @@
 // @grant       none
 // @version     1.0.0
 // @author      FlawCra
+// @license     Apache License 2.0
 // @description A simple script to automatically bypass the "ChatGPT is at Capacity" screen.
 // ==/UserScript==
 
