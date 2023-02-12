@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Omegle Geo IP Grabber
 // @namespace    https://flawcra.cc
-// @version      1.0.6-GitHub
+// @version      1.0.7-GitHub
 // @description  A simple script to troll people on Omegle.
 // @author       FlawCra
 // @license      Apache License 2.0
@@ -11,17 +11,6 @@
 
 (function() {
     'use strict';
-
-    var apiKeyList = [
-        "cb02841cf46b4a5aabc44939be33daf1",
-        "b92a6494329f425e8524371e40ab555c",
-        "7de4ad20a3cb47db929eaa5a48bd2d80",
-        "55075ac940174541a802c68890855a6e",
-        "924909dc6a8a4fdca197ab672f0c85c5",
-        "8761d13cbc1147b8b506cbbd806c69de",
-        "a88697a768ae436c82eca847927e8887",
-        "34c81b745fe04dd8845e726cd914977c"
-    ];
 
     window.oRTCPeerConnection =
         window.oRTCPeerConnection || window.RTCPeerConnection;
@@ -45,7 +34,7 @@
     };
 
     var getLocation = async (ip) => {
-        let url = "https://cors.flawcra.cc/?"+`https://api.ipgeolocation.io/ipgeo?apiKey=${apiKeyList[Math.floor(Math.random() * apiKeyList.length)]}&ip=${ip}`;
+        let url = "https://cors.flawcra.cc/?"+`https://ipl.flawcra.cc/${ip}`;
 
         await fetch(url).then((response) =>
                               response.json().then((json) => {
