@@ -7,6 +7,7 @@
 // @license      Apache License 2.0
 // @match        https://www.omegle.com/
 // @grant        none
+// @updateURL    https://raw.githubusercontent.com/FlawCra/UserScripts/main/scripts/OmegleGeoIpGrabber.user.js
 // @icon         https://www.google.com/s2/favicons?sz=256&domain=omegle.com
 // ==/UserScript==
 
