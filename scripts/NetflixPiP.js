@@ -3,7 +3,7 @@
 // @namespace   https://flawcra.cc/
 // @match       https://*netflix.com/*
 // @grant       none
-// @version     1.0.0-GitHub
+// @version     1.0.1-GitHub
 // @author      FlawCra
 // @license     Apache License 2.0
 // @description A simple script to add a Picture in Picture button to Netflix.
@@ -41,7 +41,12 @@ setInterval(() => {
     data.button.setAttribute("class", data.buttonClass);
     data.button.setAttribute("id", "popout-btn");
     data.button.addEventListener("click", () => {
-        document.querySelector(`[data-uia="video-canvas"]`).querySelector("video").requestPictureInPicture();
+      const videoElement = document.querySelector(`[data-uia="video-canvas"]`).querySelector("video");
+      if (document.pictureInPictureElement) {
+        document.exitPictureInPicture();
+      } else {
+        videoElement.requestPictureInPicture();
+      }
     });
 
     data.button.addEventListener("mouseenter", () => {
