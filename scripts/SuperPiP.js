@@ -3,7 +3,7 @@
 // @namespace   https://flawcra.cc/
 // @match       *://*/*
 // @grant       none
-// @version     1.0.2-GitHub
+// @version     1.0.3-GitHub
 // @author      FlawCra
 // @license     Apache License 2.0
 // @icon    data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iY3VycmVudENvbG9yIj4KICA8cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik00LjUgNC41bDE1IDE1bTAgMFY4LjI1bTAgMTEuMjVIOC4yNSIgLz4KPC9zdmc+
@@ -77,6 +77,9 @@ matchDomain(`https:\/\/(.*)\.?youtube\.com(.*)`, () => loop(() => {
   if(elem.style.display == "") return;
 
   elem.style.display = "";
+  elem.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 4.5l15 15m0 0V8.25m0 11.25H8.25" />
+</svg>`;
 }));
 
 
