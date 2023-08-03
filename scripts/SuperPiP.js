@@ -3,15 +3,17 @@
 // @namespace   https://flawcra.cc/
 // @match       *://*/*
 // @grant       none
-// @version     1.0.4-GitHub
+// @version     1.0.5-GitHub
 // @author      FlawCra
 // @license     Apache License 2.0
-// @icon    data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iY3VycmVudENvbG9yIj4KICA8cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik00LjUgNC41bDE1IDE1bTAgMFY4LjI1bTAgMTEuMjVIOC4yNSIgLz4KPC9zdmc+
+// @icon    data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI0Y5RjlGOSI+CiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNNC41IDQuNWwxNSAxNW0wIDBWOC4yNW0wIDExLjI1SDguMjUiIC8+Cjwvc3ZnPg==
 // @description A simple script to add a Picture in Picture button to multiple Sites.
 // ==/UserScript==
-const SVG = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+const SVG = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#F9F9F9">
   <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 4.5l15 15m0 0V8.25m0 11.25H8.25" />
 </svg>`;
+
+const SVG64 = `data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI0Y5RjlGOSI+CiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNNC41IDQuNWwxNSAxNW0wIDBWOC4yNW0wIDExLjI1SDguMjUiIC8+Cjwvc3ZnPg==`;
 
 matchDomain(`https:\/\/(.*)\.?netflix\.com(.*)`, () => loop(() => {
   if (document.querySelector("#popout-btn")) return;
@@ -83,6 +85,7 @@ matchDomain(`https:\/\/(.*)\.?youtube\.com(.*)`, () => loop(() => {
 matchDomain(`https:\/\/(.*)\.?disneyplus\.com(.*)`, () => loop(() => {
   let data = {};
   data.masterDiv = document.querySelector(".controls__right");
+  if (!data.masterDiv) return;
   data.button = data.masterDiv.querySelector(`[data-tooltip="PiP"]`);
   if (data.button) return;
 
@@ -92,7 +95,6 @@ matchDomain(`https:\/\/(.*)\.?disneyplus\.com(.*)`, () => loop(() => {
   data.button.setAttribute("class", "control-icon-btn fullscreen-icon tooltip__left");
   data.button.setAttribute("role", "button");
   data.button.setAttribute("data-tooltip", "PiP");
-  data.button.style.color = "#F9F9F9";
   data.button.addEventListener("click", () => {
     const videoElement = document.querySelector(`[id^="hudson-player-"]`).querySelector("video");
     if (videoElement.hasAttribute("disablepictureinpicture")) videoElement.removeAttribute("disablepictureinpicture");
@@ -115,7 +117,64 @@ matchDomain(`https:\/\/(.*)\.?disneyplus\.com(.*)`, () => loop(() => {
 }));
 
 
+matchDomain(`https:\/\/www\.amazon\.[a-z]{2,3}\/-\/[a-z]{2}\/gp\/video\/detail\/[A-Za-z0-9]+`, () => loop(() => {
+  let data = {};
+  data.masterDiv = document.querySelector(".atvwebplayersdk-hideabletopbuttons-container");
+  if (!data.masterDiv) return;
+  data.button = data.masterDiv.querySelector(`[data-tooltip="PiP"]`);
+  if (data.button) return;
 
+  data.div = document.createElement("div");
+  data.div.setAttribute("class", "f1qd5172 f7mv6lt");
+
+  data.span = document.createElement("span");
+
+  data.spandiv = document.createElement("div");
+  data.spandiv.setAttribute("class", "fewcsle fcmecz0");
+
+  data.button = document.createElement("button");
+  data.button.setAttribute("class", "fqye4e3 f1ly7q5u fk9c3ap fz9ydgy f1xrlb00 f1hy0e6n fgbpje3 f1uteees f1h2a8xb f760yrh f1mic5r1 f13ipev8 atvwebplayersdk-subtitleaudiomenu-button f130s5ag f15v4vpu frcngjs f12ossvl f45h");
+  data.button.setAttribute("data-tooltip", "PiP");
+  data.button.setAttribute("aria-label", "Picture in Picture");
+  data.button.setAttribute("style", "padding: 0px; min-width: 0px;");
+  data.button.addEventListener("click", () => {
+      const videoElement = document.querySelector(".webPlayerElement").querySelector("video");
+      if (videoElement.hasAttribute("disablepictureinpicture")) videoElement.removeAttribute("disablepictureinpicture");
+      if (document.pictureInPictureElement) {
+          document.exitPictureInPicture();
+      } else {
+          videoElement.requestPictureInPicture();
+      }
+  });
+
+  data.buttondiv = document.createElement("div");
+  data.buttondiv.setAttribute("class", "f45h");
+
+  data.buttondivimg = document.createElement("img");
+  data.buttondivimg.setAttribute("class", "fuorrko");
+  data.buttondivimg.style.color = "#F9F9F9";
+  data.buttondivimg.src = SVG64;
+
+  data.buttondiv.appendChild(data.buttondivimg);
+  data.button.appendChild(data.buttondiv);
+
+  data.spandivdiv = document.createElement("div");
+  data.spandivdiv.setAttribute("class", "f1wp6x33");
+
+  data.spandivdivdiv = document.createElement("div");
+  data.spandivdivdiv.setAttribute("class", "fhjv49j f1svrrcm f1tep9b4 fqlubke");
+  data.spandivdivdiv.innerText = "Picture in Picture";
+
+  data.spandivdiv.appendChild(data.spandivdivdiv);
+  data.spandiv.appendChild(data.button);
+  data.spandiv.appendChild(data.spandivdiv);
+  data.span.appendChild(data.spandiv);
+  data.div.appendChild(data.span);
+
+  document.querySelector(".atvwebplayersdk-hideabletopbuttons-container").lastChild.remove();
+
+  data.masterDiv.appendChild(data.div);
+}));
 
 
 
