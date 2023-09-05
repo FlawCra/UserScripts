@@ -4,7 +4,7 @@
 // @match       https://*.youtube.com/*
 // @match       https://youtube.com/*
 // @grant       none
-// @version     1.0.0-GitHub
+// @version     1.0.1-GitHub
 // @author      FlawCra
 // @run-at      document-end
 // @license     Apache License 2.0
