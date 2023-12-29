@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Bandcamp Download Button
 // @namespace    https://flawcra.cc
-// @version      1.0.7-GitHub
+// @version      1.0.8-GitHub
 // @description  A simple download button for Bandcamp and Bandcamp based sites
 // @author       FlawCra
-// @license     Apache License 2.0
+// @license      Apache License 2.0
 // @match        *://*/*
 // @grant        all
 // ==/UserScript==
@@ -14,7 +14,7 @@
     var tryLoop = setInterval(() => {
       if(document.getElementById("footer-logo")) {
             if(document.getElementById("footer-logo").firstChild.innerText == "Bandcamp") {
-                var bar = document.getElementsByClassName("share-collect-controls")[0]
+                var bar = document.querySelector(".share-collect-controls ul");
                 var spacer = document.createElement("a");
                 spacer.setAttribute("id", "collect-anchor");
                 bar.appendChild(spacer);
@@ -27,15 +27,15 @@
                 action.setAttribute("class", "action compound-button");
                 action.setAttribute("title", "Download this track");
                 action.addEventListener("click", () => {
-                    if(document.getElementsByTagName("audio")[0].src) {
-                        fetch("https://cors.flawcra.cc/?"+document.getElementsByTagName("audio")[0].src).then(function(t) {
+                    if(document.querySelector("audio")?.src) {
+                        fetch("https://cors.flawcra.cc/?"+document.querySelector("audio")?.src).then(function(t) {
                             return t.blob().then((b)=>{
                                 var a = document.createElement("a");
                                 a.href = URL.createObjectURL(b);
-                                if(document.getElementsByClassName("title")[0].innerText) {
-                                    a.setAttribute("download", document.getElementById("name-section").children[1].firstElementChild.innerText + " - " +document.getElementsByClassName("trackTitle")[0].innerText + " - " + document.getElementsByClassName("title")[0].innerText + ".mp3");
+                                if(document.querySelector(".title")?.innerText) {
+                                    a.setAttribute("download", document.getElementById("name-section").children[1].firstElementChild.innerText + " - " +document.querySelector(".trackTitle")?.innerText + " - " + document.getElementsByClassName("title")[0].innerText + ".mp3");
                                 } else {
-                                    a.setAttribute("download", document.getElementById("name-section").children[1].firstElementChild.innerText + " - " +document.getElementsByClassName("trackTitle")[0].innerText + ".mp3");
+                                    a.setAttribute("download", document.getElementById("name-section").children[1].firstElementChild.innerText + " - " +document.querySelector(".trackTitle")?.innerText + ".mp3");
                                 }
                                 a.click();
                             });
@@ -57,7 +57,7 @@
                 action.appendChild(msg);
                 elem.appendChild(action);
                 bar.appendChild(elem);
-          clearInterval(tryLoop);
+                clearInterval(tryLoop);
             }
         }
     }, 1000);
