@@ -4,7 +4,7 @@
 // @match       https://*.youtube.com/*
 // @match       https://youtube.com/*
 // @grant       none
-// @version     1.0.1-GitHub
+// @version     1.0.2-GitHub
 // @author      FlawCra
 // @run-at      document-end
 // @license     Apache License 2.0
@@ -12,8 +12,16 @@
 // @icon        https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://youtube.com&size=256
 // ==/UserScript==
 setInterval(() => {
-  document.getElementById("clarify-box")?.remove()
-  document.getElementById("comment-teaser")?.remove()
+  document.getElementById("clarify-box")?.remove();
+  document.getElementById("comment-teaser")?.remove();
+  document.querySelectorAll(".yt-core-attributed-string__link").forEach((it) => {
+      const href = it.href;
+      if(!(new RegExp(/https?:/).test(href))) return;
+      if(!(new RegExp(/youtube\./).test(href))) return;
+      if(!(new RegExp(/\/redirect\?event/).test(href))) return;
+      const rurl = new URL(href);
+      it.href = rurl.searchParams.get("q");
+  });
 }, 250);
 
 
