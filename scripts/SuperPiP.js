@@ -3,7 +3,7 @@
 // @namespace   https://flawcra.cc/
 // @match       *://*/*
 // @grant       none
-// @version     1.0.5-GitHub
+// @version     1.0.6-GitHub
 // @author      FlawCra
 // @license     Apache License 2.0
 // @icon    data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI0Y5RjlGOSI+CiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNNC41IDQuNWwxNSAxNW0wIDBWOC4yNW0wIDExLjI1SDguMjUiIC8+Cjwvc3ZnPg==
@@ -76,6 +76,7 @@ matchDomain(`https:\/\/(.*)\.?netflix\.com(.*)`, () => loop(() => {
 
 matchDomain(`https:\/\/(.*)\.?youtube\.com(.*)`, () => loop(() => {
   const elem = document.querySelector(".ytp-pip-button");
+  if (!elem) return;
   if (elem.style.display == "") return;
 
   elem.style.display = "";
