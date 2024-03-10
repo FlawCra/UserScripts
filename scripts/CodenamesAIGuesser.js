@@ -3,9 +3,10 @@
 // @namespace   https://flawcra.cc/
 // @match       https://codenames.game/*
 // @grant       none
-// @version     1.0.0-GitHub
+// @version     1.0.1-GitHub
 // @author      FlawCra
 // @license     Apache License 2.0
+// @icon        https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://codenames.game&size=256
 // @description A simple script that sends all possible words with the hint to an AI server to guess the correct word(s)
 // ==/UserScript==
 
