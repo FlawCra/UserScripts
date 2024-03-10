@@ -3,7 +3,7 @@
 // @namespace   https://flawcra.cc/
 // @match       https://codenames.game/*
 // @grant       none
-// @version     1.0.0
+// @version     1.0.0-GitHub
 // @author      FlawCra
 // @license     Apache License 2.0
 // @description A simple script that sends all possible words with the hint to an AI server to guess the correct word(s)
