@@ -3,11 +3,13 @@
 // @namespace   https://flawcra.cc/
 // @match       *://*/*
 // @grant       none
-// @version     1.0.6-GitHub
+// @version     1.0.7-GitHub
 // @author      FlawCra
 // @license     Apache License 2.0
 // @icon    data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI0Y5RjlGOSI+CiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNNC41IDQuNWwxNSAxNW0wIDBWOC4yNW0wIDExLjI1SDguMjUiIC8+Cjwvc3ZnPg==
 // @description A simple script to add a Picture in Picture button to multiple Sites.
+// @downloadURL https://update.greasyfork.org/scripts/461296/Super%20PiP.user.js
+// @updateURL https://update.greasyfork.org/scripts/461296/Super%20PiP.meta.js
 // ==/UserScript==
 const SVG = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#F9F9F9">
   <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 4.5l15 15m0 0V8.25m0 11.25H8.25" />
@@ -21,7 +23,7 @@ matchDomain(`https:\/\/(.*)\.?netflix\.com(.*)`, () => loop(() => {
   data.masterDiv = document.querySelector(`[data-uia="controls-standard"] > div > div:nth-child(3) > div > div:nth-child(3)`)
   if (!data.masterDiv) return;
 
-  data.exampleSpacer = data.masterDiv.querySelector(`[class^="ltr-"]`);
+  data.exampleSpacer = data.masterDiv.querySelector(`[class^="default-ltr-"]`);
   data.spacerClass = data.exampleSpacer.getAttribute("class");
   data.spacerStyle = data.exampleSpacer.getAttribute("style");
 
