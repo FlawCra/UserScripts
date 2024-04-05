@@ -9,7 +9,7 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       unsafeWindow
-// @version     1.1.0-GitHub
+// @version     1.1.1-GitHub
 // @author      FlawCra
 // @license     Apache License 2.0
 // @description Never gonna rickroll you, never gonna let you get rickrolled.
@@ -19,33 +19,69 @@
 // @updateURL https://update.greasyfork.org/scripts/428854/AntiRickRoll.meta.js
 // ==/UserScript==
 
+if(!unsafeWindow.hasOwnProperty("antirickroll")) unsafeWindow["antirickroll"] = {};
+
+unsafeWindow["antirickroll"]["blockCount"] = 0;
+unsafeWindow["antirickroll"]["loops"] = [];
+
+function removeItemAll(arr, value) {
+  var i = 0;
+  while (i < arr.length) {
+    if (arr[i] === value) {
+      arr.splice(i, 1);
+    } else {
+      ++i;
+    }
+  }
+  return arr;
+}
+
 function blockVideo(block) {
-  window["antirick_block"] = block;
+  unsafeWindow["antirickroll"]["block"] = block;
+  unsafeWindow["antirickroll"]["blockCount"] = 0;
   if(!block) return;
-  window["antirick_loop"] = setInterval(() => {
-	  var elements = document.querySelectorAll("video");
+  unsafeWindow["antirickroll"]["loops"].push(setInterval(() => {
+    unsafeWindow.console.debug("Running block logic on all videos")
+    unsafeWindow["antirickroll"]["blockCount"]++;
+	  var elements = unsafeWindow.document.querySelectorAll("video");
     if(elements.length > 0) {
       for(const el of elements) {
-        el.style.display = window["antirick_block"] ? "none" : "";
-        el.muted = window["antirick_block"];
-        if(!window["antirick_block"]) {
+        el.style.display = unsafeWindow["antirickroll"]["block"] ? "none" : "";
+        el.muted = unsafeWindow["antirickroll"]["block"];
+        if(!unsafeWindow["antirickroll"]["block"]) {
           el.currentTime = 0;
+          unsafeWindow["antirickroll"]["loops"].forEach(it => {
+            clearInterval(it);
+            removeItemAll(unsafeWindow["antirickroll"]["loops"], it);
+          });
         }
       }
     }
 
-    if(!window["antirick_block"]) clearInterval(window["antirick_loop"]);
-  }, 250);
+    if(unsafeWindow["antirickroll"]["blockCount"] > 5) {
+      unsafeWindow.console.debug("Loop detected!");
+      unsafeWindow["antirickroll"]["block"] = false;
+      unsafeWindow["antirickroll"]["loops"].forEach(it => {
+        clearInterval(it);
+        removeItemAll(unsafeWindow["antirickroll"]["loops"], it);
+      });
+      unsafeWindow["antirickroll"]["blockCount"] = 0;
+    }
+
+    if(!unsafeWindow["antirickroll"]["block"] && unsafeWindow["antirickroll"]["loop"]) unsafeWindow["antirickroll"]["loops"].forEach(it => {
+      clearInterval(it);
+      removeItemAll(unsafeWindow["antirickroll"]["loops"], it);
+
+    });
+  }, 250));
 }
 
 const check = (() => {
     unsafeWindow.GM_getValue = GM_getValue;
     unsafeWindow.GM_setValue = GM_setValue;
     unsafeWindow.blockVideo = blockVideo;
-    //if(!GM_getValue("bypassed")) {
-      blockVideo(true);
-    //}
 
+    blockVideo(true);
 
     let blocked_ids = [
         "dQw4w9WgXcQ",
@@ -66,7 +102,7 @@ const check = (() => {
             blocked_ids.push(rr);
         }
         if(blocked_ids.find(i => location.href.includes(i)) && !location.href.includes("https://antirickroll.flawcra.cc/?")) {
-          console.log(GM_getValue("bypassed"))
+          unsafeWindow.console.log(GM_getValue("bypassed"))
           if(!GM_getValue("bypassed")) {
             location = "https://antirickroll.flawcra.cc/?"+location.href;
           }
@@ -74,7 +110,7 @@ const check = (() => {
         }
         blockVideo(false);
     }).catch(er => {
-      console.log('error',er);
+      unsafeWindow.console.log('error',er);
       blockVideo(false);
     });
 });
