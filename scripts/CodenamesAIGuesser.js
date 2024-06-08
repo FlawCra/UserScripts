@@ -28,12 +28,7 @@ guess_answer = (() => {
     let hint = hintguess[0].innerText.trim();
     let targets = parseInt(hintguess[1].innerText.trim());
 
-  let lang = null;
-  document.querySelector(".flag-parent .flag").classList.forEach((it) => {
-      if(it == "flag") return;
-      if(it.startsWith("jsx-")) return;
-      lang - it;
-  });
+    let lang = window.localStorage.lang;
 
     // Create the JSON object
     let jObj = { words: list, hint, targets, lang };
