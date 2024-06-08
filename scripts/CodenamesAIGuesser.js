@@ -3,7 +3,7 @@
 // @namespace   https://flawcra.cc/
 // @match       https://codenames.game/*
 // @grant       none
-// @version     1.0.1-GitHub
+// @version     1.0.2-GitHub
 // @author      FlawCra
 // @license     Apache License 2.0
 // @icon        https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://codenames.game&size=256
@@ -57,7 +57,8 @@ guess_answer = (() => {
 
                 ai_results = document.createElement("span");
                 ai_results.innerText = `AI GUESS RESULT: ${answers_text}`;
-                ai_results.setAttribute("class", "text-center text-white");
+                ai_results.setAttribute("class", "text-center text-white overflow-y-scroll");
+                document.querySelector("#gamescene").style.overflowY = "scroll";
                 btnList.appendChild(ai_results);
             }
         } catch (error) {
