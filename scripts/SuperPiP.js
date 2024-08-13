@@ -3,7 +3,7 @@
 // @namespace   https://flawcra.cc/
 // @match       *://*/*
 // @grant       none
-// @version     1.0.9-GitHub
+// @version     1.1.0-GitHub
 // @author      FlawCra
 // @license     Apache License 2.0
 // @icon    data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI0Y5RjlGOSI+CiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNNC41IDQuNWwxNSAxNW0wIDBWOC4yNW0wIDExLjI1SDguMjUiIC8+Cjwvc3ZnPg==
@@ -91,7 +91,9 @@ matchDomain(`https:\/\/(.*)\.?disneyplus\.com(.*)`, () => loop(() => {
   if (!data.masterDiv) return;
 
   if(document.pictureInPictureElement && document.pictureInPictureElement != document.querySelector(`[id^="hudson-"].video_view--theater`).querySelector("video")) {
-    document.querySelector(`[id^="hudson-"].video_view--theater`).querySelector("video").requestPictureInPicture();
+    const videoElement = document.querySelector(`[id^="hudson-"].video_view--theater`).querySelector("video");
+    if (videoElement.hasAttribute("disablepictureinpicture")) videoElement.removeAttribute("disablepictureinpicture");
+    videoElement.requestPictureInPicture();
     return;
   }
 
