@@ -3,7 +3,7 @@
 // @namespace   https://flawcra.cc/
 // @match       *://*/*
 // @grant       none
-// @version     1.1.0-GitHub
+// @version     1.1.1-GitHub
 // @author      FlawCra
 // @license     Apache License 2.0
 // @icon    data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI0Y5RjlGOSI+CiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNNC41IDQuNWwxNSAxNW0wIDBWOC4yNW0wIDExLjI1SDguMjUiIC8+Cjwvc3ZnPg==
@@ -17,7 +17,7 @@ const SVG = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24
 
 const SVG64 = `data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iI0Y5RjlGOSI+CiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNNC41IDQuNWwxNSAxNW0wIDBWOC4yNW0wIDExLjI1SDguMjUiIC8+Cjwvc3ZnPg==`;
 
-matchDomain(`https:\/\/(.*)\.?netflix\.com(.*)`, () => loop(() => {
+const netflix = () => {
   if (document.querySelector("#popout-btn")) return;
   let data = {};
   data.masterDiv = document.querySelector(`[data-uia="controls-standard"] > div > div:nth-child(3) > div > div:nth-child(3)`)
@@ -74,18 +74,22 @@ matchDomain(`https:\/\/(.*)\.?netflix\.com(.*)`, () => loop(() => {
 
   data.masterDiv.appendChild(data.spacer);
   data.masterDiv.appendChild(data.icon);
-}));
+};
 
-matchDomain(`https:\/\/(.*)\.?youtube\.com(.*)`, () => loop(() => {
+matchDomain(`https:\/\/(.*)\.?netflix\.com(.*)`, () => loop(netflix));
+
+const youtube = () => {
   const elem = document.querySelector(".ytp-pip-button");
   if (!elem) return;
   if (elem.style.display == "") return;
 
   elem.style.display = "";
   elem.innerHTML = SVG;
-}));
+};
 
-matchDomain(`https:\/\/(.*)\.?disneyplus\.com(.*)`, () => loop(() => {
+matchDomain(`https:\/\/(.*)\.?youtube\.com(.*)`, () => loop(youtube));
+
+const disneyPlus = () => {
   let data = {};
   data.masterDiv = document.querySelector(".controls__right");
   if (!data.masterDiv) return;
@@ -125,10 +129,11 @@ matchDomain(`https:\/\/(.*)\.?disneyplus\.com(.*)`, () => loop(() => {
   data.button.appendChild(data.buttonDiv);
 
   data.masterDiv.appendChild(data.button);
-}));
+};
 
+matchDomain(`https:\/\/(.*)\.?disneyplus\.com(.*)`, () => loop(disneyPlus));
 
-matchDomain(`https:\/\/www\.amazon\.[a-z]{2,3}\/-\/[a-z]{2}\/gp\/video\/detail\/[A-Za-z0-9]+`, () => loop(() => {
+const amazonPrimeVideo = () => {
   let data = {};
   data.masterDiv = document.querySelector(".atvwebplayersdk-hideabletopbuttons-container");
   if (!data.masterDiv) return;
@@ -149,7 +154,7 @@ matchDomain(`https:\/\/www\.amazon\.[a-z]{2,3}\/-\/[a-z]{2}\/gp\/video\/detail\/
   data.button.setAttribute("aria-label", "Picture in Picture");
   data.button.setAttribute("style", "padding: 0px; min-width: 0px;");
   data.button.addEventListener("click", () => {
-      const videoElement = document.querySelector(".webPlayerElement").querySelector("video");
+      const videoElement = document.querySelector(".scalingVideoContainer video");
       if (videoElement.hasAttribute("disablepictureinpicture")) videoElement.removeAttribute("disablepictureinpicture");
       if (document.pictureInPictureElement) {
           document.exitPictureInPicture();
@@ -185,8 +190,10 @@ matchDomain(`https:\/\/www\.amazon\.[a-z]{2,3}\/-\/[a-z]{2}\/gp\/video\/detail\/
   document.querySelector(".atvwebplayersdk-hideabletopbuttons-container").lastChild.remove();
 
   data.masterDiv.appendChild(data.div);
-}));
+};
 
+matchDomain(`https:\/\/www\.amazon\.[a-z]{2,3}\/-\/[a-z]{2}\/gp\/video\/detail\/[A-Za-z0-9]+`, () => loop(amazonPrimeVideo));
+matchDomain(`https:\/\/www\.amazon\.[a-z]{2,3}\/-\/[a-z]{2}\/dp\/[A-Za-z0-9]+`, () => loop(amazonPrimeVideo));
 
 
 function loop(func) {
