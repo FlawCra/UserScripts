@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Uhmegle NSFW Reporter with Auto-Skip
 // @namespace    Freebee1693
-// @version      1.2.2
+// @version      1.2.2-GitHub
 // @description  A script to detect and report NSFW content on Uhmegle and auto-skip users after a set time.
 // @license      Apache License 2.0
 // @match        https://uhmegle.com/video*
