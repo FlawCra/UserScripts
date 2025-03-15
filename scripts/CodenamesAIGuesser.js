@@ -5,7 +5,7 @@
 // @grant       GM_addStyle
 // @grant       GM_setValue
 // @grant       GM_getValue
-// @version     1.2.0-GitHub
+// @version     1.2.1-GitHub
 // @author      FlawCra
 // @license     Apache License 2.0
 // @icon        https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://codenames.game&size=256
@@ -19,6 +19,20 @@ const API_URL = "https://cng.flawcra.cc";
 
 // Store reference to popup window
 let aiPopup = null;
+
+// Store the last known hint to detect changes
+let lastHint = {
+    text: '',
+    count: 0
+};
+
+// Track the last game state for detecting changes
+let lastGameState = {
+    role: '',
+    team: '',
+    hasHint: false,
+    turnPhase: ''
+};
 
 // HTML Content for the popup window
 const popupHTML = `
@@ -313,6 +327,80 @@ const getSpymasterWords = () => {
     };
 };
 
+// Get the current hint if available
+const getCurrentHint = () => {
+    const hintElement = document.querySelector("#layoutRoot > .bottom .button")?.parentElement?.parentElement?.querySelector("article")?.children;
+
+    if (hintElement && hintElement.length >= 2) {
+        return {
+            text: hintElement[0].innerText.trim(),
+            count: parseInt(hintElement[1].innerText.trim())
+        };
+    }
+
+    return { text: '', count: 0 };
+};
+
+// Check if the hint has changed
+const hasHintChanged = () => {
+    const currentHint = getCurrentHint();
+
+    // Check if the hint has changed
+    if (currentHint.text !== lastHint.text || currentHint.count !== lastHint.count) {
+        lastHint = currentHint;
+        return true;
+    }
+
+    return false;
+};
+
+// Get current game phase
+const getGamePhase = () => {
+    // This is a simple proxy for the game phase - it checks if it's your turn to give a hint or guess
+    const isYourTurn = document.querySelector(".team-name.current") &&
+                      document.querySelector(".team-name.current").classList.contains(getCurrentTeamColor());
+
+    if (!isYourTurn) {
+        return "opponent-turn";
+    }
+
+    if (isSpymaster()) {
+        return "give-hint";
+    } else {
+        // Check if there's a hint displayed
+        const hint = getCurrentHint();
+        return hint.text ? "make-guess" : "waiting-for-hint";
+    }
+};
+
+// Check if game state has meaningfully changed
+const hasGameStateChanged = () => {
+    const currentRole = isSpymaster() ? 'spymaster' : 'guesser';
+    const currentTeam = getCurrentTeamColor();
+    const currentHint = getCurrentHint();
+    const currentPhase = getGamePhase();
+
+    // Check if any important state has changed
+    if (currentRole !== lastGameState.role ||
+        currentTeam !== lastGameState.team ||
+        (currentHint.text !== '' && !lastGameState.hasHint) ||
+        currentPhase !== lastGameState.turnPhase) {
+
+        // Update last state
+        lastGameState = {
+            role: currentRole,
+            team: currentTeam,
+            hasHint: currentHint.text !== '',
+            turnPhase: currentPhase
+        };
+
+        return true;
+    }
+
+    return false;
+};
+
+// Generate a cache breaker string based on the game state
 const getCacheBreaker = () => {
   let cacheBreaker = "";
   for(const color of ['red', 'blue']) {
@@ -386,14 +474,9 @@ const updatePopupContent = () => {
         // Guesser View
 
         // Current Hint
-        const hintguess = document.querySelector("#layoutRoot > .bottom .button")?.parentElement?.parentElement?.querySelector("article")?.children;
-        let hint = '';
-        let targets = 0;
-
-        if (hintguess) {
-            hint = hintguess[0].innerText.trim();
-            targets = parseInt(hintguess[1].innerText.trim());
-        }
+        const currentHint = getCurrentHint();
+        const hint = currentHint.text;
+        const targets = currentHint.count;
 
         contentHTML += `
             <div class="section">
@@ -481,12 +564,11 @@ const guess_answer = async () => {
     });
 
     // Access elements for hint and targets
-    const btnList = document.querySelector("#layoutRoot > .bottom .button")?.parentElement?.parentElement;
-    if(!btnList) return;
-    let hintguess = btnList.querySelector("article")?.children;
-    if(!hintguess) return;
-    let hint = hintguess[0].innerText.trim();
-    let targets = parseInt(hintguess[1].innerText.trim());
+    const currentHint = getCurrentHint();
+    if (!currentHint.text) return;
+
+    let hint = currentHint.text;
+    let targets = currentHint.count;
     let lang = window.localStorage.lang;
 
     // Show loading state
@@ -790,23 +872,49 @@ const setupGameObserver = () => {
     const config = { attributes: true, childList: true, subtree: true };
 
     const callback = function(mutationsList, observer) {
-        let gameStateChanged = false;
+        // Check for specific hint changes
+        if (hasHintChanged()) {
+            console.log("Hint changed detected!");
+            if (aiPopup && !aiPopup.closed) {
+                updatePopupContent();
+            }
+            return;
+        }
 
+        // Check for broader game state changes
+        if (hasGameStateChanged()) {
+            console.log("Game state change detected!");
+            if (aiPopup && !aiPopup.closed) {
+                updatePopupContent();
+            }
+            return;
+        }
+
+        // As a fallback, check specific mutations
         for (const mutation of mutationsList) {
             // Detect role changes (spymaster toggle)
             if (mutation.type === 'attributes' &&
                 mutation.target.classList &&
                 mutation.target.classList.contains('spymaster-button')) {
-                gameStateChanged = true;
+                console.log("Role change detected!");
+                if (aiPopup && !aiPopup.closed) {
+                    updatePopupContent();
+                }
                 break;
             }
 
-            // Detect new hints (for guessers)
+            // Detect hint-related changes - check for multiple selectors that might contain hints
             if (!isSpymaster() &&
-                mutation.type === 'childList' &&
-                mutation.target.classList &&
-                mutation.target.classList.contains('clue')) {
-                gameStateChanged = true;
+                ((mutation.target.classList &&
+                  (mutation.target.classList.contains('clue') ||
+                   mutation.target.classList.contains('article'))) ||
+                 (mutation.type === 'childList' &&
+                  mutation.target.querySelector &&
+                  mutation.target.querySelector('.clue, article')))) {
+                console.log("Hint UI change detected!");
+                if (aiPopup && !aiPopup.closed) {
+                    updatePopupContent();
+                }
                 break;
             }
 
@@ -814,24 +922,40 @@ const setupGameObserver = () => {
             if (mutation.type === 'attributes' &&
                 mutation.target.classList &&
                 mutation.target.classList.contains('team-name')) {
-                gameStateChanged = true;
+                console.log("Team turn change detected!");
+                if (aiPopup && !aiPopup.closed) {
+                    updatePopupContent();
+                }
                 break;
             }
-        }
-
-        if (gameStateChanged && aiPopup && !aiPopup.closed) {
-            updatePopupContent();
         }
     };
 
     const observer = new MutationObserver(callback);
     observer.observe(targetNode, config);
+
+    // Add periodic checks as a fallback for any missed changes
+    setInterval(() => {
+        if (aiPopup && !aiPopup.closed && (hasHintChanged() || hasGameStateChanged())) {
+            console.log("Periodic check detected change!");
+            updatePopupContent();
+        }
+    }, 2000);
 };
 
 // Initialize everything
 const initInterval = setInterval(() => {
     const gameScene = document.getElementById("gamescene");
     if (gameScene) {
+        // Initialize state tracking
+        lastHint = getCurrentHint();
+        lastGameState = {
+            role: isSpymaster() ? 'spymaster' : 'guesser',
+            team: getCurrentTeamColor(),
+            hasHint: lastHint.text !== '',
+            turnPhase: getGamePhase()
+        };
+
         addPopupButton();
         setupGameObserver();
         clearInterval(initInterval);
